@@ -9,8 +9,8 @@ from pathlib import Path
 
 
 # Caminhos das pastas
-PASTA_RAW = Path("dados/raw")
-PASTA_PROCESSED = Path("dados/processed")
+PASTA_RAW = Path("Dados/raw")
+PASTA_PROCESSED = Path("Dados/processed")
 
 
 # ============================================================
@@ -266,18 +266,38 @@ D_Tempo.insert(
 D_Tempo["ano"] = D_Tempo["data"].dt.year
 D_Tempo["mes"] = D_Tempo["data"].dt.month
 
-D_Tempo["nome_mes"] = D_Tempo["data"].dt.month_name(
-    locale="pt_BR"
-)
+meses = {
+    1: "Janeiro",
+    2: "Fevereiro",
+    3: "Março",
+    4: "Abril",
+    5: "Maio",
+    6: "Junho",
+    7: "Julho",
+    8: "Agosto",
+    9: "Setembro",
+    10: "Outubro",
+    11: "Novembro",
+    12: "Dezembro"
+}
+
+D_Tempo["nome_mes"] = D_Tempo["data"].dt.month.map(meses)
 
 D_Tempo["trimestre"] = D_Tempo["data"].dt.quarter
 
 D_Tempo["dia"] = D_Tempo["data"].dt.day
 
-D_Tempo["dia_semana"] = D_Tempo["data"].dt.day_name(
-    locale="pt_BR"
-)
+dias_semana = {
+    0: "Segunda-feira",
+    1: "Terça-feira",
+    2: "Quarta-feira",
+    3: "Quinta-feira",
+    4: "Sexta-feira",
+    5: "Sábado",
+    6: "Domingo"
+}
 
+D_Tempo["dia_semana"] = D_Tempo["data"].dt.dayofweek.map(dias_semana)
 
 print(f"D_Tempo criada: {len(D_Tempo)} registros")
 print(D_Tempo.head())
@@ -561,3 +581,53 @@ print(f"D_Tempo:     {len(D_Tempo)} registros")
 print(f"F_Vendas:    {len(F_Vendas)} registros")
 
 print("\nETL CONCLUÍDO E VALIDADO COM SUCESSO!")
+
+# ============================================================
+# ETAPA 7 - VISUALIZAÇÃO DAS TABELAS DO ESQUEMA ESTRELA
+# ============================================================
+
+print("\n" + "=" * 60)
+print("ETAPA 7 - VISUALIZAÇÃO DAS TABELAS DO ESQUEMA ESTRELA")
+print("=" * 60)
+
+print("\n--- D_CLIENTE ---")
+print(D_Cliente.head())
+print(f"Total de registros: {len(D_Cliente)}")
+
+print("\n--- D_PRODUTO ---")
+print(D_Produto.head())
+print(f"Total de registros: {len(D_Produto)}")
+
+print("\n--- D_VENDEDOR ---")
+print(D_Vendedor.head())
+print(f"Total de registros: {len(D_Vendedor)}")
+
+print("\n--- D_TEMPO ---")
+print(D_Tempo.head())
+print(f"Total de registros: {len(D_Tempo)}")
+
+print("\n--- F_VENDAS ---")
+print(F_Vendas.head())
+print(f"Total de registros: {len(F_Vendas)}")
+
+print("\n" + "=" * 60)
+print("VISUALIZAÇÃO DAS TABELAS CONCLUÍDA!")
+print("=" * 60)
+
+# ============================================================
+# RESUMO DAS TABELAS
+# ============================================================
+
+print("\n" + "=" * 60)
+print("RESUMO DAS TABELAS")
+print("=" * 60)
+
+print(f"\nD_Cliente   : {len(D_Cliente)} registros")
+print(f"D_Produto   : {len(D_Produto)} registros")
+print(f"D_Vendedor  : {len(D_Vendedor)} registros")
+print(f"D_Tempo     : {len(D_Tempo)} registros")
+print(f"F_Vendas    : {len(F_Vendas)} registros")
+
+print("\n" + "=" * 60)
+print("ETL CONCLUÍDO E VALIDADO COM SUCESSO!")
+print("=" * 60)
